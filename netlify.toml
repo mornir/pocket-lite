@@ -1,0 +1,11 @@
+[build]
+  command = "yarn build"
+  publish = "dist"
+  functions = "functions"
+
+
+# Rule for router history mode
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

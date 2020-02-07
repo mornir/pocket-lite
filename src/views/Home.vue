@@ -11,19 +11,14 @@
 
 import axios from 'axios'
 
-const REDIRECT_URI = 'http://localhost:8080/'
-
 export default {
   name: 'home',
   methods: {
     connect() {
       axios
-        .post('https://getpocket.com/v3/oauth/request', {
-          consumer_key: process.env.VUE_APP_CONSUMER_KEY,
-          redirect_uri: REDIRECT_URI,
-        })
-        .then(response => {
-          const REQUEST_TOKEN = response.code
+        .get('/.netlify/functions/connect-pocket')
+        .then(res => {
+          const { REQUEST_TOKEN, REDIRECT_URI } = res.data
           window.location.assign(
             `https://getpocket.com/auth/authorize?request_token=${REQUEST_TOKEN}&redirect_uri=${REDIRECT_URI}`
           )
