@@ -1,6 +1,8 @@
 <template>
   <div>
-    <button class="px-2 border-2 border-blue-500" @click="connect">Connect with Pocket</button>
+    <button class="px-2 border-2 border-blue-500" @click="connect">
+      Connect with Pocket
+    </button>
   </div>
 </template>
 
