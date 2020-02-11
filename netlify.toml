@@ -1,7 +1,7 @@
 [build]
   command = "yarn build && yarn build:functions"
   publish = "dist"
-  functions = "built-functions"
+  functions = ".netlify/functions"
 
 
 # Rule for router history mode
