@@ -1,6 +1,6 @@
-const axios = require('axios')
+import axios from 'axios'
 
-const pocket = axios.create({
+export default axios.create({
   baseURL: 'https://getpocket.com/v3/',
   method: 'post',
   headers: {
@@ -8,5 +8,3 @@ const pocket = axios.create({
     'X-Accept': 'application/json',
   },
 })
-
-module.exports = pocket
