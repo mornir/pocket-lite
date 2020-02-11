@@ -18,7 +18,10 @@ export default {
       axios
         .get('/.netlify/functions/connect-pocket')
         .then(res => {
-          const { REQUEST_TOKEN, REDIRECT_URI } = res.data
+          const { REQUEST_TOKEN, CONSUMER_KEY, REDIRECT_URI } = res.data
+
+          window.localStorage.setItem('requestToken', REQUEST_TOKEN)
+          window.localStorage.setItem('consumerKey', CONSUMER_KEY)
 
           window.location.assign(
             `https://getpocket.com/auth/authorize?request_token=${REQUEST_TOKEN}&redirect_uri=${REDIRECT_URI}`
