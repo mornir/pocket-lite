@@ -1,5 +1,5 @@
 // Docs on event and context https://www.netlify.com/docs/functions/#the-handler-method
-const pocket = require('./utils/pocket-client')
+const pocket = require('./pocket-client')
 const getList = require('./utils/get-list')
 
 exports.handler = async event => {

@@ -28,7 +28,7 @@ export default {
           )
         })
         .catch(error => {
-          console.log(error)
+          console.dir(error)
         })
     },
   },

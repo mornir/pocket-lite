@@ -1,4 +1,4 @@
-const pocket = require('./pocket-client')
+const pocket = require('../pocket-client')
 
 exports.getList = async token => {
   try {

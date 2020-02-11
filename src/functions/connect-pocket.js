@@ -1,9 +1,9 @@
 // Docs on event and context https://www.netlify.com/docs/functions/#the-handler-method
-const pocket = require('./utils/pocket-client')
+const pocket = require('./pocket-client')
 
 exports.handler = async () => {
   try {
-    const res = await pocket({
+    const res = await pocket.get({
       url: 'oauth/request',
       data: {
         consumer_key: process.env.CONSUMER_KEY,
