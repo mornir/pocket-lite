@@ -1,7 +1,7 @@
 [build]
   command = "yarn build"
   publish = "dist"
-  functions = "functions"
+  functions = "built-functions"
 
 
 # Rule for router history mode

@@ -1,9 +1,10 @@
 // Docs on event and context https://www.netlify.com/docs/functions/#the-handler-method
-const pocket = require('./utils/pocket-client')
-const getList = require('./utils/get-list')
+import pocket from './utils/pocket-client'
+import { getList } from './utils/get-list'
 
-exports.handler = async event => {
-  const code = event.queryStringParameters.name
+export async function handler(event) {
+  const code = event.queryStringParameters.code
+
   try {
     const res = await pocket({
       url: 'oauth/authorize',
@@ -15,16 +16,16 @@ exports.handler = async event => {
 
     console.log(res.data)
 
-    const res2 = await getList()
+    const list = await getList(res.data.access_token)
 
-    console.log(res2.data)
+    console.log(list)
 
     return {
       statusCode: 200,
       body: JSON.stringify({
         ACCESS_TOKEN: res.data.access_token,
         username: res.data.username,
-        list: res2.data.list,
+        list,
       }),
     }
   } catch (err) {

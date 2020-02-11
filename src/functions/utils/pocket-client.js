@@ -1,6 +1,6 @@
-const axios = require('axios')
+import axios from 'axios'
 
-exports.pocket = axios.create({
+export default axios.create({
   baseURL: 'https://getpocket.com/v3/',
   method: 'post',
   headers: {
