@@ -2,13 +2,15 @@
 
 import pocket from './utils/pocket-client'
 
-export async function handler() {
+export async function handler(event) {
   try {
+    const REDIRECT_URI = JSON.parse(event.body).redirect_uri
+
     const res = await pocket({
       url: 'oauth/request',
       data: {
         consumer_key: process.env.CONSUMER_KEY,
-        redirect_uri: process.env.REDIRECT_URI,
+        redirect_uri: REDIRECT_URI,
       },
     })
 
@@ -18,8 +20,6 @@ export async function handler() {
       statusCode: 200,
       body: JSON.stringify({
         REQUEST_TOKEN: res.data.code,
-        REDIRECT_URI: process.env.REDIRECT_URI,
-        CONSUMER_KEY: process.env.CONSUMER_KEY,
       }),
     }
   } catch (err) {
