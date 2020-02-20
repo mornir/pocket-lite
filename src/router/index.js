@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import OAuth from '../views/OAuth.vue'
 
 Vue.use(VueRouter)
 
@@ -10,11 +9,6 @@ const routes = [
     path: '/',
     name: 'home',
     component: Home,
-  },
-  {
-    path: '/oauth',
-    name: 'oauth',
-    component: OAuth,
   },
   {
     path: '/about',
