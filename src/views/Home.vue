@@ -2,6 +2,7 @@
   <div>
     <button
       v-if="!isLoggedIn"
+      data-cy="login"
       class="px-2 border-2 border-blue-500"
       @click="login"
     >
@@ -42,14 +43,17 @@ export default {
 
       localStorage.setItem('requestToken', REQUEST_TOKEN)
 
-      window.location.assign(
+      window.locationAssign(
         `https://getpocket.com/auth/authorize?request_token=${REQUEST_TOKEN}&redirect_uri=${redirect_uri}`
       )
     },
     getList(token) {
+      //TODO: this should be a GET request
       axios
-        .post(`/.netlify/functions/get-list-pocket`, {
-          token,
+        .get(`/.netlify/functions/get-list-pocket`, {
+          params: {
+            token,
+          },
         })
         .then(res => {
           this.isLoggedIn = true
@@ -68,7 +72,6 @@ export default {
   },
   created() {
     if (this.$route.query.mode === 'auth') {
-      //TODO: remove query params
       const REQUEST_TOKEN = localStorage.getItem('requestToken')
       if (REQUEST_TOKEN) {
         axios

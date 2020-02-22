@@ -3,9 +3,26 @@ import pocket from './utils/pocket-client'
 import { getList } from './utils/get-list'
 
 export async function handler(event) {
-  const code = event.queryStringParameters.code
-
   try {
+    if (event.httpMethod !== 'GET') {
+      return {
+        statusCode: 405,
+        body: 'METHOD NOT ALLOWED',
+        headers: {
+          Allow: 'GET',
+        },
+      }
+    }
+
+    const code = event.queryStringParameters.code
+
+    if (!code) {
+      return {
+        statusCode: 400,
+        body: 'Request token is missing',
+      }
+    }
+
     const res = await pocket({
       url: 'oauth/authorize',
       data: {
@@ -14,11 +31,7 @@ export async function handler(event) {
       },
     })
 
-    console.log(res.data)
-
     const list = await getList(res.data.access_token)
-
-    console.log(list)
 
     return {
       statusCode: 200,

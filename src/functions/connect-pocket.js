@@ -1,10 +1,32 @@
-// Docs on event and context https://www.netlify.com/docs/functions/#the-handler-method
-
 import pocket from './utils/pocket-client'
 
 export async function handler(event) {
   try {
+    if (event.httpMethod !== 'POST') {
+      return {
+        statusCode: 405,
+        body: 'METHOD NOT ALLOWED',
+        headers: {
+          Allow: 'POST',
+        },
+      }
+    }
+
+    if (!event.body) {
+      return {
+        statusCode: 400,
+        body: 'Body is missing',
+      }
+    }
+
     const REDIRECT_URI = JSON.parse(event.body).redirect_uri
+
+    if (!REDIRECT_URI) {
+      return {
+        statusCode: 400,
+        body: 'REDIRECT_URI param is missing',
+      }
+    }
 
     const res = await pocket({
       url: 'oauth/request',
@@ -13,8 +35,6 @@ export async function handler(event) {
         redirect_uri: REDIRECT_URI,
       },
     })
-
-    console.log(res.data)
 
     return {
       statusCode: 200,

@@ -1,11 +1,23 @@
 import { getList } from './utils/get-list'
 
 export async function handler(event) {
-  console.log(event.body)
   try {
-    const token = JSON.parse(event.body).token
+    if (event.httpMethod !== 'GET') {
+      return {
+        statusCode: 405,
+        body: 'METHOD NOT ALLOWED',
+        headers: {
+          Allow: 'GET',
+        },
+      }
+    }
+    const token = event.queryStringParameters.token
+
     if (!token) {
-      throw new Error('No token was provided')
+      return {
+        statusCode: 400,
+        body: 'Acess token is missing',
+      }
     }
 
     const list = await getList(token)
