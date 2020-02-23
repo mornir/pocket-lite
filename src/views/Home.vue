@@ -34,8 +34,8 @@ export default {
     async login() {
       const redirect_uri = process.env.VUE_APP_REDIRECT_URI
       const res = await axios
-        .post('/.netlify/functions/connect-pocket', {
-          redirect_uri,
+        .get('/.netlify/functions/connect-pocket', {
+          params: { redirect_uri },
         })
         .catch(err => console.dir('It failed!', err))
 

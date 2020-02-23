@@ -2,12 +2,12 @@ import pocket from './utils/pocket-client'
 
 export async function handler(event) {
   try {
-    if (event.httpMethod !== 'POST') {
+    if (event.httpMethod !== 'GET') {
       return {
         statusCode: 405,
         body: 'METHOD NOT ALLOWED',
         headers: {
-          Allow: 'POST',
+          Allow: 'GET',
         },
       }
     }
@@ -19,9 +19,9 @@ export async function handler(event) {
       }
     }
 
-    const REDIRECT_URI = JSON.parse(event.body).redirect_uri
+    const redirect_uri = event.queryStringParameters.redirect_uri
 
-    if (!REDIRECT_URI) {
+    if (!redirect_uri) {
       return {
         statusCode: 400,
         body: 'REDIRECT_URI param is missing',
@@ -32,7 +32,7 @@ export async function handler(event) {
       url: 'oauth/request',
       data: {
         consumer_key: process.env.CONSUMER_KEY,
-        redirect_uri: REDIRECT_URI,
+        redirect_uri,
       },
     })
 
