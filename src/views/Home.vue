@@ -8,7 +8,12 @@
     >
       Log in with Pocket
     </button>
-    <button v-else class="px-2 border-2 border-red-500" @click="logout">
+    <button
+      v-else
+      data-cy="logout"
+      class="px-2 border-2 border-red-500"
+      @click="logout"
+    >
       Log out
     </button>
     <ul>
