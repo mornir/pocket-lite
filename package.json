@@ -7,13 +7,10 @@
     "build": "vue-cli-service build",
     "test": "cypress open",
     "test:ci": "cypress run",
-    "lint": "vue-cli-service lint",
-    "start:functions": "netlify-lambda serve src/functions",
-    "build:functions": "netlify-lambda build src/functions"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "axios": "^0.19.2",
-    "netlify-lambda": "^1.6.3",
     "tailwindcss": "^1.2.0",
     "vue": "^2.6.10",
     "vue-router": "^3.1.3"

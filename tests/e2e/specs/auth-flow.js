@@ -4,7 +4,7 @@
 describe('Authentication Workflow - Happy Path', () => {
   it('Gets the request token', () => {
     cy.server()
-    cy.route('GET', '/.netlify/functions/connect-pocket?**/**').as('getToken')
+    cy.route('POST', '/pocket/oauth/request').as('getToken')
 
     cy.visit('/')
 
@@ -15,7 +15,7 @@ describe('Authentication Workflow - Happy Path', () => {
     cy.get('[data-cy=login]').click()
 
     cy.wait('@getToken').should(xhr => {
-      const requestToken = xhr.response.body.REQUEST_TOKEN
+      const requestToken = xhr.response.body.code
       expect(localStorage.getItem('requestToken')).to.eq(requestToken)
       cy.get('@windowAssign').should(
         'be.calledWith',

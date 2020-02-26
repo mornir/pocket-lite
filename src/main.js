@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import axios from 'axios'
 import App from './App.vue'
 import router from './router'
 
@@ -8,6 +9,18 @@ import '@/assets/css/tailwind.css'
 window.locationAssign = url => window.location.assign(url)
 
 Vue.config.productionTip = false
+
+const instance = axios.create({
+  method: 'post',
+  headers: {
+    'Content-Type': 'application/json; charset=UTF-8',
+    'X-Accept': 'application/json',
+  },
+})
+
+instance.interceptors.response.use(response => response.data)
+
+Vue.prototype.$pocket = instance
 
 new Vue({
   router,

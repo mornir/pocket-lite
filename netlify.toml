@@ -1,8 +1,13 @@
 [build]
-  command = "yarn build && yarn build:functions"
+  command = "yarn build"
   publish = "dist"
-  functions = ".netlify/functions"
 
+# Rule for api
+[[redirects]]
+  from = "/pocket/*"
+  to = "https://getpocket.com/v3/:splat"
+  status = 200
+  force = true
 
 # Rule for router history mode
 [[redirects]]
