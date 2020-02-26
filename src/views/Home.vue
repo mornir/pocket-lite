@@ -70,7 +70,6 @@ export default {
     },
   },
   created() {
-    console.log('key', process.env.VUE_APP_CONSUMER_KEY)
     if (this.$route.query.mode === 'auth') {
       const REQUEST_TOKEN = localStorage.getItem('requestToken')
       if (REQUEST_TOKEN) {
