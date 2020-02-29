@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="font-sans">
+  <div id="app" class="container mx-auto font-sans">
     <header>
       <h1 class="text-3xl">Pocket Lite</h1>
     </header>

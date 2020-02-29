@@ -17,7 +17,7 @@
       Log out
     </button>
     <PocketAdd @newArticle="list.unshift($event)" />
-    <ul class="grid-cols-2 gap-4 md:grid" style="grid-auto-rows: 4rem">
+    <ul class="grid-cols-2 gap-4 md:grid" style="grid-auto-rows: 5rem">
       <li
         v-for="{ item_id, resolved_title, resolved_url } in list"
         :key="item_id"
