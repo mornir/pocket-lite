@@ -16,17 +16,33 @@
     >
       Log out
     </button>
-    <ul>
-      <li v-for="article in list" :key="article.item_id">
-        {{ article.resolved_title }}
+    <PocketAdd @newArticle="list.unshift($event)" />
+    <ul class="grid-cols-2 gap-4 md:grid" style="grid-auto-rows: 4rem">
+      <li
+        v-for="{ item_id, resolved_title, resolved_url } in list"
+        :key="item_id"
+      >
+        <PocketArticle
+          :id="item_id"
+          :title="resolved_title"
+          :url="resolved_url"
+          @archived="archive"
+        />
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import PocketArticle from '@/components/PocketArticle'
+import PocketAdd from '@/components/PocketAdd'
+
 export default {
   name: 'home',
+  components: {
+    PocketArticle,
+    PocketAdd,
+  },
   data() {
     return {
       list: [],
@@ -59,14 +75,24 @@ export default {
         data: {
           consumer_key: process.env.VUE_APP_CONSUMER_KEY,
           access_token: token,
+          count: '50',
+          sort: 'newest',
           detailType: 'simple',
         },
+      })
+    },
+    formatList(list) {
+      return Object.values(list).sort((a, b) => {
+        return b.time_added - a.time_added
       })
     },
     logout() {
       this.isLoggedIn = false
       this.list = []
       localStorage.clear()
+    },
+    archive(id) {
+      this.list = this.list.filter(({ item_id }) => item_id !== id)
     },
   },
   created() {
@@ -104,8 +130,8 @@ export default {
     if (ACCESS_TOKEN) {
       this.isListLoading = true
       this.getList(ACCESS_TOKEN)
-        .then(({ list }) => {
-          this.list = list
+        .then(res => {
+          this.list = this.formatList(res.list)
           this.isLoggedIn = true
         })
         .catch(error => {

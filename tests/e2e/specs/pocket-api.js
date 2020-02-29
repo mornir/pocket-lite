@@ -26,10 +26,31 @@ describe('Authentication Workflow - Happy Path', () => {
     })
   })
 
-  it('Fetches the list of articles', () => {
+  it('Retrieves, adds and archives', () => {
+    const url = 'https://dev.to/mornir/add-tailwind-to-your-vue-app-5hea'
+    const urlTitle = 'How to add Tailwind to your Vue app'
+
+    const defaultArticle =
+      'Your Pocket journey starts now. Make the most of it.'
+
     localStorage.setItem('accessToken', Cypress.env().accessToken)
     cy.visit('/')
-    cy.contains('Your Pocket journey starts now. Make the most of it.')
+    cy.contains(defaultArticle)
+    cy.get('[data-cy=add-url]').type(`${url}{enter}`)
+    cy.contains(url)
+    cy.reload()
+    cy.get('article')
+      .first()
+      .contains(urlTitle)
+
+    cy.get('button[data-cy=archive-btn]')
+      .first()
+      .click()
+
+    cy.get('ul li')
+      .contains(defaultArticle)
+      .its('length')
+      .should('eq', 1)
   })
 
   it('Clears localstorage', () => {
