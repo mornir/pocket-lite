@@ -17,6 +17,10 @@
       Log out
     </button>
     <PocketAdd @newArticle="list.unshift($event)" />
+    <p>
+      You have <span class="font-semibold">{{ count }}</span> in your reading
+      list
+    </p>
     <ul class="grid-cols-2 gap-4 md:grid" style="grid-auto-rows: 5rem">
       <li
         v-for="{ item_id, resolved_title, resolved_url } in list"
@@ -93,6 +97,18 @@ export default {
     },
     archive(id) {
       this.list = this.list.filter(({ item_id }) => item_id !== id)
+    },
+  },
+  computed: {
+    count() {
+      const nb = this.list.length
+      if (nb === 0 || nb === 1) {
+        return nb + ' article'
+      } else if (nb >= 50) {
+        return 'more than 50 articles'
+      } else {
+        return nb + ' articles'
+      }
     },
   },
   created() {
