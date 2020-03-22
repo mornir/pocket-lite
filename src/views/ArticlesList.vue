@@ -1,41 +1,23 @@
 <template>
   <div>
-    <div v-if="!isLoggedIn">
-      <button
-        data-cy="login"
-        class="px-2 border-2 border-blue-500"
-        @click="login"
+    <PocketAdd @newArticle="list.unshift($event)" />
+    <p>
+      You have <span class="font-semibold">{{ count }}</span> in your reading
+      list
+    </p>
+    <ul class="c-grid">
+      <li
+        v-for="{ item_id, resolved_title, resolved_url } in list"
+        :key="item_id"
       >
-        Log in with Pocket
-      </button>
-    </div>
-    <div v-else>
-      <button
-        data-cy="logout"
-        class="px-2 border-2 border-red-500"
-        @click="logout"
-      >
-        Log out
-      </button>
-      <PocketAdd @newArticle="list.unshift($event)" />
-      <p>
-        You have <span class="font-semibold">{{ count }}</span> in your reading
-        list
-      </p>
-      <ul class="c-grid">
-        <li
-          v-for="{ item_id, resolved_title, resolved_url } in list"
-          :key="item_id"
-        >
-          <PocketArticle
-            :id="item_id"
-            :title="resolved_title"
-            :url="resolved_url"
-            @archived="archive"
-          />
-        </li>
-      </ul>
-    </div>
+        <PocketArticle
+          :id="item_id"
+          :title="resolved_title"
+          :url="resolved_url"
+          @archived="archive"
+        />
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -44,7 +26,7 @@ import PocketArticle from '@/components/PocketArticle'
 import PocketAdd from '@/components/PocketAdd'
 
 export default {
-  name: 'home',
+  name: 'ArticlesList',
   components: {
     PocketArticle,
     PocketAdd,
@@ -57,24 +39,6 @@ export default {
     }
   },
   methods: {
-    async login() {
-      const redirect_uri = process.env.VUE_APP_REDIRECT_URI
-
-      this.$pocket({
-        url: '/pocket/oauth/request',
-        data: {
-          consumer_key: process.env.VUE_APP_CONSUMER_KEY,
-          redirect_uri,
-        },
-      })
-        .then(({ code }) => {
-          localStorage.setItem('requestToken', code)
-          window.locationAssign(
-            `https://getpocket.com/auth/authorize?request_token=${code}&redirect_uri=${redirect_uri}`
-          )
-        })
-        .catch(err => console.dir('It failed!', err))
-    },
     async getList(token) {
       return this.$pocket({
         url: '/pocket/get',
@@ -91,11 +55,6 @@ export default {
       return Object.values(list).sort((a, b) => {
         return b.time_added - a.time_added
       })
-    },
-    logout() {
-      this.isLoggedIn = false
-      this.list = []
-      localStorage.clear()
     },
     archive(id) {
       this.list = this.list.filter(({ item_id }) => item_id !== id)

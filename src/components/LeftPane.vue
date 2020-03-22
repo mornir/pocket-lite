@@ -9,7 +9,15 @@
         width="80"
         height="80"
         viewBox="0 0 250 250"
-        style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; left: 0; transform: scale(-1, 1);"
+        style="
+          fill: #fd6c6c;
+          color: #fff;
+          position: absolute;
+          top: 0;
+          border: 0;
+          left: 0;
+          transform: scale(-1, 1);
+        "
         aria-hidden="true"
       >
         <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
@@ -32,17 +40,56 @@
       </h1>
       <h2 class="mb-8 text-xl font-medium">A lighter version</h2>
       <button
+        v-if="isLoggedIn"
         data-cy="login"
         class="px-4 py-2 font-semibold border-2 rounded-md border-primary"
       >
         Log in with Pocket
+      </button>
+      <button
+        data-cy="logout"
+        class="px-4 py-2 font-semibold border-2 rounded-md border-primary"
+      >
+        Log out
       </button>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'LeftPane',
+  props: {
+    isLoggedIn: {
+      type: Boolean,
+      default: false,
+      required: true,
+    },
+  },
+  methods: {
+    login() {
+      const redirect_uri = process.env.VUE_APP_REDIRECT_URI
+
+      this.$pocket({
+        url: '/pocket/oauth/request',
+        data: {
+          consumer_key: process.env.VUE_APP_CONSUMER_KEY,
+          redirect_uri,
+        },
+      })
+        .then(({ code }) => {
+          localStorage.setItem('requestToken', code)
+          window.locationAssign(
+            `https://getpocket.com/auth/authorize?request_token=${code}&redirect_uri=${redirect_uri}`
+          )
+        })
+        .catch(err => console.dir('It failed!', err))
+    },
+    logout() {
+      this.$emit('logout')
+    },
+  },
+}
 </script>
 
 <style>
