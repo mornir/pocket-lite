@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "vue-cli-service serve",
+    "dev": "ntl dev",
     "build": "vue-cli-service build",
     "test": "cypress open",
     "test:ci": "cypress run",

@@ -6,10 +6,10 @@
       :href="url"
       rel="noopener nofollow"
     >
-      <h1>
+      <h1 class="text-sm font-semibold">
         {{ title || url }}
       </h1>
-      <h2 class="text-xs font-bold">
+      <h2 class="text-xs">
         {{ domain }}
       </h2>
     </a>

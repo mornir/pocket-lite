@@ -1,39 +1,41 @@
 <template>
   <div>
-    <button
-      v-if="!isLoggedIn"
-      data-cy="login"
-      class="px-2 border-2 border-blue-500"
-      @click="login"
-    >
-      Log in with Pocket
-    </button>
-    <button
-      v-else
-      data-cy="logout"
-      class="px-2 border-2 border-red-500"
-      @click="logout"
-    >
-      Log out
-    </button>
-    <PocketAdd @newArticle="list.unshift($event)" />
-    <p>
-      You have <span class="font-semibold">{{ count }}</span> in your reading
-      list
-    </p>
-    <ul class="grid-cols-2 gap-4 md:grid" style="grid-auto-rows: 5rem">
-      <li
-        v-for="{ item_id, resolved_title, resolved_url } in list"
-        :key="item_id"
+    <div v-if="!isLoggedIn">
+      <button
+        data-cy="login"
+        class="px-2 border-2 border-blue-500"
+        @click="login"
       >
-        <PocketArticle
-          :id="item_id"
-          :title="resolved_title"
-          :url="resolved_url"
-          @archived="archive"
-        />
-      </li>
-    </ul>
+        Log in with Pocket
+      </button>
+    </div>
+    <div v-else>
+      <button
+        data-cy="logout"
+        class="px-2 border-2 border-red-500"
+        @click="logout"
+      >
+        Log out
+      </button>
+      <PocketAdd @newArticle="list.unshift($event)" />
+      <p>
+        You have <span class="font-semibold">{{ count }}</span> in your reading
+        list
+      </p>
+      <ul class="c-grid">
+        <li
+          v-for="{ item_id, resolved_title, resolved_url } in list"
+          :key="item_id"
+        >
+          <PocketArticle
+            :id="item_id"
+            :title="resolved_title"
+            :url="resolved_url"
+            @archived="archive"
+          />
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -160,3 +162,13 @@ export default {
   },
 }
 </script>
+
+<style lang="postcss" scoped>
+@sreen md {
+  .c-grid {
+    display: grid;
+    grid-auto-rows: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
+  }
+}
+</style>
