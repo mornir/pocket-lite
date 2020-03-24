@@ -34,11 +34,11 @@
         ></path></svg
     ></a>
     <div class="ml-8">
-      <h1>
-        <span class="text-5xl font-bold">Pocket</span> <br />
+      <h1 class="mb-3">
+        <span class="text-5xl font-bold leading-none">Pocket</span> <br />
         <span class="text-4xl font-medium text-primary">Lite</span>
       </h1>
-      <h2 class="mb-8 text-xl font-medium">A lighter version</h2>
+      <h2 class="mb-8 text-xl font-medium text-gray-600">A lighter version</h2>
       <button
         v-if="!$store.state.isLoggedIn"
         @click="login"
