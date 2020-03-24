@@ -6,12 +6,8 @@
       :href="url"
       rel="noopener nofollow"
     >
-      <h1 class="text-sm font-semibold">
-        {{ title || url }}
-      </h1>
-      <h2 class="text-xs">
-        {{ domain }}
-      </h2>
+      <h1 class="text-sm font-semibold">{{ title || url }}</h1>
+      <h2 class="text-xs">{{ domain }}</h2>
     </a>
     <button
       class="flex items-center p-4 bg-red-200"
@@ -58,7 +54,7 @@ export default {
   methods: {
     archive() {
       try {
-        this.$store.dispatch('archive', id)
+        this.$store.dispatch('archive', this.id)
       } catch (e) {
         console.error(e)
       }

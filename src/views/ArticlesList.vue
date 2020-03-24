@@ -7,7 +7,7 @@
     </p>
     <ul class="c-grid">
       <li
-        v-for="{ item_id, resolved_title, resolved_url } in list"
+        v-for="{ item_id, resolved_title, resolved_url } in $store.state.list"
         :key="item_id"
       >
         <PocketArticle
@@ -33,11 +33,8 @@ export default {
     PocketAdd,
   },
   computed: {
-    list() {
-      return this.$store.getters.sortedList
-    },
     count() {
-      const nb = this.list.length
+      const nb = this.$store.state.list.length
       if (nb === 0 || nb === 1) {
         return nb + ' article'
       } else if (nb >= 50) {

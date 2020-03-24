@@ -26,16 +26,17 @@ describe('Authentication Workflow - Happy Path', () => {
     })
   })
 
+  // TODO: Make clearer which tests are passing: retrieving, adding or archiving
   it.only('Retrieves, adds and archives', () => {
     const url = 'https://dev.to/mornir/add-tailwind-to-your-vue-app-5hea'
     const urlTitle = 'How to add Tailwind to your Vue app'
 
     const defaultArticle =
       'Your Pocket journey starts now. Make the most of it.'
-
     localStorage.setItem('accessToken', Cypress.env().accessToken)
     cy.visit('/')
     cy.contains(defaultArticle)
+
     cy.get('[data-cy=add-url]').type(`${url}{enter}`)
     cy.contains(url)
     cy.reload()
@@ -43,7 +44,11 @@ describe('Authentication Workflow - Happy Path', () => {
 
     cy.get('button[data-cy=archive-btn]').first().click()
 
-    cy.get('ul li').contains(defaultArticle).its('length').should('eq', 1)
+    // Use Should callback to have Cypress automatically retry the assertions
+    cy.get('ul li').should($list => {
+      expect($list).to.have.length(1)
+      expect($list.get(0).textContent, 'first item').to.contain(defaultArticle)
+    })
   })
 
   it('Clears localstorage', () => {

@@ -22,16 +22,11 @@ export default new Vuex.Store({
     isLoggedIn: false,
     list: [],
   },
-  getters: {
-    sortedList(state) {
-      return Object.values(state.list).sort((a, b) => {
-        return b.time_added - a.time_added
-      })
-    },
-  },
   mutations: {
     setList(state, list) {
-      state.list = list
+      state.list = Object.values(list).sort((a, b) => {
+        return b.time_added - a.time_added
+      })
     },
     login(state) {
       state.isLoggedIn = true
@@ -44,8 +39,8 @@ export default new Vuex.Store({
     archive(state, id) {
       state.list = state.list.filter(({ item_id }) => item_id !== id)
     },
-    addURL(state, url) {
-      state.list.unshift(url)
+    addURL(state, article) {
+      state.list.unshift(article)
     },
   },
   actions: {
@@ -114,7 +109,7 @@ export default new Vuex.Store({
     },
     async addURL({ commit }, url) {
       const access_token = localStorage.getItem('accessToken')
-      const { item } = pocket({
+      const { item } = await pocket({
         url: '/pocket/add',
         data: {
           consumer_key,
@@ -122,7 +117,6 @@ export default new Vuex.Store({
           url: encodeURI(url),
         },
       })
-      console.log(item)
       commit('addURL', item)
     },
   },
