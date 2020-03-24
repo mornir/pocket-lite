@@ -26,7 +26,7 @@ describe('Authentication Workflow - Happy Path', () => {
     })
   })
 
-  it('Retrieves, adds and archives', () => {
+  it.only('Retrieves, adds and archives', () => {
     const url = 'https://dev.to/mornir/add-tailwind-to-your-vue-app-5hea'
     const urlTitle = 'How to add Tailwind to your Vue app'
 
@@ -39,18 +39,11 @@ describe('Authentication Workflow - Happy Path', () => {
     cy.get('[data-cy=add-url]').type(`${url}{enter}`)
     cy.contains(url)
     cy.reload()
-    cy.get('article')
-      .first()
-      .contains(urlTitle)
+    cy.get('article').first().contains(urlTitle)
 
-    cy.get('button[data-cy=archive-btn]')
-      .first()
-      .click()
+    cy.get('button[data-cy=archive-btn]').first().click()
 
-    cy.get('ul li')
-      .contains(defaultArticle)
-      .its('length')
-      .should('eq', 1)
+    cy.get('ul li').contains(defaultArticle).its('length').should('eq', 1)
   })
 
   it('Clears localstorage', () => {

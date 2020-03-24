@@ -20,19 +20,11 @@ export default {
   },
   methods: {
     addURL() {
-      const url = encodeURI(this.url)
-      const access_token = localStorage.getItem('accessToken')
-      this.$pocket({
-        url: '/pocket/add',
-        data: {
-          consumer_key: process.env.VUE_APP_CONSUMER_KEY,
-          access_token,
-          url,
-        },
-      }).then(({ item }) => {
-        this.$emit('newArticle', item)
-        console.log(item)
-      })
+      try {
+        this.$store.dispatch('addURL', this.url)
+      } catch (e) {
+        console.error(e)
+      }
     },
   },
 }

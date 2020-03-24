@@ -3,27 +3,30 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "ntl dev",
     "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "dev": "ntl dev",
     "test": "cypress open",
-    "test:ci": "cypress run",
-    "lint": "vue-cli-service lint"
+    "test:ci": "cypress run"
   },
   "dependencies": {
     "axios": "^0.19.2",
     "tailwindcss": "^1.2.0",
     "vue": "^2.6.10",
-    "vue-router": "^3.1.6"
+    "vue-router": "^3.1.6",
+    "vuex": "^3.1.2"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^2.1.0",
     "@vue/cli-plugin-eslint": "^4.2.3",
     "@vue/cli-plugin-router": "^4.2.3",
+    "@vue/cli-plugin-vuex": "^4.2.3",
     "@vue/cli-service": "^4.2.3",
     "@vue/eslint-config-prettier": "^6.0.0",
     "babel-eslint": "^10.1.0",
     "cypress": "^4.2.0",
     "eslint": "^6.8.0",
+    "eslint-plugin-cypress": "^2.10.3",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-vue": "^6.2.2",
     "prettier": "^2.0.1",

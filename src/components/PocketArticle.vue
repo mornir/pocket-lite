@@ -57,30 +57,12 @@ export default {
   },
   methods: {
     archive() {
-      const access_token = localStorage.getItem('accessToken')
-      this.$pocket({
-        url: '/pocket/send',
-        data: {
-          consumer_key: process.env.VUE_APP_CONSUMER_KEY,
-          access_token,
-          actions: [
-            {
-              action: 'archive',
-              item_id: this.id,
-              time: Date().now,
-            },
-          ],
-        },
-      }).then(res => {
-        if (res.status) {
-          this.$emit('archived', this.id)
-        } else {
-          console.log('failed!')
-        }
-      })
+      try {
+        this.$store.dispatch('archive', id)
+      } catch (e) {
+        console.error(e)
+      }
     },
   },
 }
 </script>
-
-<style></style>

@@ -40,13 +40,15 @@
       </h1>
       <h2 class="mb-8 text-xl font-medium">A lighter version</h2>
       <button
-        v-if="isLoggedIn"
+        v-if="!$store.state.isLoggedIn"
+        @click="login"
         data-cy="login"
         class="px-4 py-2 font-semibold border-2 rounded-md border-primary"
       >
         Log in with Pocket
       </button>
       <button
+        v-else
         data-cy="logout"
         class="px-4 py-2 font-semibold border-2 rounded-md border-primary"
       >
@@ -59,34 +61,17 @@
 <script>
 export default {
   name: 'LeftPane',
-  props: {
-    isLoggedIn: {
-      type: Boolean,
-      default: false,
-      required: true,
-    },
-  },
   methods: {
-    login() {
-      const redirect_uri = process.env.VUE_APP_REDIRECT_URI
-
-      this.$pocket({
-        url: '/pocket/oauth/request',
-        data: {
-          consumer_key: process.env.VUE_APP_CONSUMER_KEY,
-          redirect_uri,
-        },
-      })
-        .then(({ code }) => {
-          localStorage.setItem('requestToken', code)
-          window.locationAssign(
-            `https://getpocket.com/auth/authorize?request_token=${code}&redirect_uri=${redirect_uri}`
-          )
-        })
-        .catch(err => console.dir('It failed!', err))
+    async login() {
+      try {
+        await this.$store.dispatch('login')
+        console.log('success!')
+      } catch (e) {
+        console.error(e)
+      }
     },
     logout() {
-      this.$emit('logout')
+      this.$store.commit('logout')
     },
   },
 }

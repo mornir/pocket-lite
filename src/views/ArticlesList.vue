@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PocketAdd @newArticle="list.unshift($event)" />
+    <PocketAdd />
     <p>
       You have <span class="font-semibold">{{ count }}</span> in your reading
       list
@@ -14,7 +14,6 @@
           :id="item_id"
           :title="resolved_title"
           :url="resolved_url"
-          @archived="archive"
         />
       </li>
     </ul>
@@ -25,42 +24,18 @@
 import PocketArticle from '@/components/PocketArticle'
 import PocketAdd from '@/components/PocketAdd'
 
+/* import { mapState } from 'vuex' */
+
 export default {
   name: 'ArticlesList',
   components: {
     PocketArticle,
     PocketAdd,
   },
-  data() {
-    return {
-      list: [],
-      isLoggedIn: false,
-      isListLoading: false,
-    }
-  },
-  methods: {
-    async getList(token) {
-      return this.$pocket({
-        url: '/pocket/get',
-        data: {
-          consumer_key: process.env.VUE_APP_CONSUMER_KEY,
-          access_token: token,
-          count: '50',
-          sort: 'newest',
-          detailType: 'simple',
-        },
-      })
-    },
-    formatList(list) {
-      return Object.values(list).sort((a, b) => {
-        return b.time_added - a.time_added
-      })
-    },
-    archive(id) {
-      this.list = this.list.filter(({ item_id }) => item_id !== id)
-    },
-  },
   computed: {
+    list() {
+      return this.$store.getters.sortedList
+    },
     count() {
       const nb = this.list.length
       if (nb === 0 || nb === 1) {
@@ -71,53 +46,6 @@ export default {
         return nb + ' articles'
       }
     },
-  },
-  created() {
-    if (this.$route.query.mode === 'auth') {
-      const REQUEST_TOKEN = localStorage.getItem('requestToken')
-      if (REQUEST_TOKEN) {
-        this.isListLoading = true
-        this.$pocket({
-          url: '/pocket/oauth/authorize',
-          data: {
-            consumer_key: process.env.CONSUMER_KEY,
-            code: REQUEST_TOKEN,
-          },
-        })
-          .then(({ access_token, username }) => {
-            localStorage.setItem('accessToken', access_token)
-            localStorage.setItem('username', username)
-            return this.getList(access_token)
-          })
-          .then(({ list }) => {
-            this.list = list
-            this.isLoggedIn = true
-            this.$router.replace({ name: 'home' })
-          })
-          .catch(error => console.dir(error))
-          .finally(() => {
-            this.isListLoading = false
-          })
-      } else {
-        //TODO: better handling of this case
-        console.log('no token')
-      }
-    }
-    const ACCESS_TOKEN = localStorage.getItem('accessToken')
-    if (ACCESS_TOKEN) {
-      this.isListLoading = true
-      this.getList(ACCESS_TOKEN)
-        .then(res => {
-          this.list = this.formatList(res.list)
-          this.isLoggedIn = true
-        })
-        .catch(error => {
-          console.dir(error)
-        })
-        .finally(() => {
-          this.isListLoading = false
-        })
-    }
   },
 }
 </script>
