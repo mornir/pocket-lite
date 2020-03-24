@@ -49,6 +49,7 @@
       </button>
       <button
         v-else
+        @click="logout"
         data-cy="logout"
         class="px-4 py-2 font-semibold border-2 rounded-md border-primary"
       >

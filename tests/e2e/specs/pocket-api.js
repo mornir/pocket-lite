@@ -27,7 +27,7 @@ describe('Authentication Workflow - Happy Path', () => {
   })
 
   // TODO: Make clearer which tests are passing: retrieving, adding or archiving
-  it.only('Retrieves, adds and archives', () => {
+  it('Retrieves, adds and archives', () => {
     const url = 'https://dev.to/mornir/add-tailwind-to-your-vue-app-5hea'
     const urlTitle = 'How to add Tailwind to your Vue app'
 
@@ -51,7 +51,7 @@ describe('Authentication Workflow - Happy Path', () => {
     })
   })
 
-  it('Clears localstorage', () => {
+  it.only('Clears localstorage', () => {
     const { username, accessToken } = Cypress.env()
     localStorage.setItem('username', username)
     localStorage.setItem('accessToken', accessToken)
