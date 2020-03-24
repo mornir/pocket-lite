@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PocketAdd />
+    <PocketAdd class="py-4" />
     <p>
       You have <span class="font-semibold">{{ count }}</span> in your reading
       list
@@ -53,6 +53,7 @@ export default {
     display: grid;
     grid-auto-rows: 1fr;
     grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
+    grid-gap: 1rem;
   }
 }
 </style>

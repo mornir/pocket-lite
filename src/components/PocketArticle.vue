@@ -1,5 +1,5 @@
 <template>
-  <article class="flex border-2 border-red-200">
+  <article class="flex border-2 border-red-200 rounded-md">
     <a
       class="flex-1 p-4 pr-0"
       target="_blank"
