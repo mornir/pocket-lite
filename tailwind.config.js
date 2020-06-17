@@ -27,4 +27,14 @@ module.exports = {
   },
   variants: {},
   plugins: [],
+  purge: {
+    options: {
+      content: ['./public/**/*.html', './src/**/*.vue'],
+      whitelistPatterns: [
+        /-(leave|enter|appear)(|-(to|from|active))$/,
+        /^(?!(|.*?:)cursor-move).+-move$/,
+        /^router-link(|-exact)-active$/,
+      ],
+    },
+  },
 }
