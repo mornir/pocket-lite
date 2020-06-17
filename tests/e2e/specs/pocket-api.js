@@ -51,7 +51,7 @@ describe('Authentication Workflow - Happy Path', () => {
     })
   })
 
-  it.only('Clears localstorage', () => {
+  it('Clears localstorage', () => {
     const { username, accessToken } = Cypress.env()
     localStorage.setItem('username', username)
     localStorage.setItem('accessToken', accessToken)
