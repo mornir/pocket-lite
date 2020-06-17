@@ -57,12 +57,11 @@ export default new Vuex.Store({
       })
       commit('setList', list)
     },
-    async auth({ dispatch, commit }) {
+    async auth({ dispatch, commit }, REQUEST_TOKEN) {
       const { access_token, username } = await pocket({
         url: '/pocket/oauth/authorize',
         data: {
           consumer_key,
-          // TODO: Missing
           code: REQUEST_TOKEN,
         },
       })

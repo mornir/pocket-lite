@@ -24,7 +24,7 @@ export default {
 
         try {
           await this.$store.dispatch('auth', REQUEST_TOKEN)
-          this.$router.replace({ name: 'home' })
+          this.$router.replace({ name: 'article-list' })
         } catch (e) {
           console.error(e)
         } finally {
