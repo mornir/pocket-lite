@@ -2,17 +2,20 @@
 /// <reference types="Cypress" />
 
 describe('Authentication Workflow - Happy Path', () => {
-  it('Gets the request token', () => {
+  it('Authenticates with Pocket', function () {
     cy.server()
     cy.route('POST', '/pocket/oauth/request').as('getToken')
+    cy.route('POST', '/pocket/oauth/authorize', {
+      access_token: Cypress.env().accessToken,
+      username: 'John',
+    })
 
     cy.visit('/')
-
     cy.window().then(win => {
       cy.stub(win, 'locationAssign').as('windowAssign')
     })
 
-    cy.get('[data-cy=login]').click()
+    cy.get('[data-cy=login]').as('button').click()
 
     cy.wait('@getToken').should(xhr => {
       const requestToken = xhr.response.body.code
@@ -24,30 +27,40 @@ describe('Authentication Workflow - Happy Path', () => {
         }?mode=auth`
       )
     })
+    cy.visit('/?mode=auth')
+
+    cy.fixture('defaultArticle').then(article => {
+      cy.contains(article.title)
+    })
   })
 
-  // TODO: Make clearer which tests are passing: retrieving, adding or archiving
   it('Retrieves, adds and archives', () => {
-    const url = 'https://dev.to/mornir/add-tailwind-to-your-vue-app-5hea'
-    const urlTitle = 'How to add Tailwind to your Vue app'
-
-    const defaultArticle =
-      'Your Pocket journey starts now. Make the most of it.'
     localStorage.setItem('accessToken', Cypress.env().accessToken)
     cy.visit('/')
-    cy.contains(defaultArticle)
 
-    cy.get('[data-cy=add-url]').type(`${url}{enter}`)
-    cy.contains(url)
-    cy.reload()
-    cy.get('article').first().contains(urlTitle)
+    cy.log('👉 Retrieves default article')
+    cy.fixture('defaultArticle').as('defaultArticle')
+    cy.get('@defaultArticle').then(article => {
+      cy.contains(article.title)
+    })
 
+    cy.log('👉 Adds new article')
+    cy.fixture('newArticle').then(article => {
+      cy.get('[data-cy=add-url]').type(`${article.url}{enter}`)
+      cy.contains(article.url)
+      cy.reload()
+      cy.get('article').first().contains(article.title)
+    })
+
+    cy.log('👉 Archives recently added article')
     cy.get('button[data-cy=archive-btn]').first().click()
 
-    // Use Should callback to have Cypress automatically retry the assertions
-    cy.get('ul li').should($list => {
-      expect($list).to.have.length(1)
-      expect($list.get(0).textContent, 'first item').to.contain(defaultArticle)
+    cy.get('@defaultArticle').then(article => {
+      // Use Should callback to have Cypress automatically retry the assertions
+      cy.get('ul li').should($list => {
+        expect($list).to.have.length(1)
+        expect($list.get(0).textContent, 'first item').to.contain(article.title)
+      })
     })
   })
 
@@ -63,4 +76,22 @@ describe('Authentication Workflow - Happy Path', () => {
         expect(localStorage.getItem('username')).to.be.null
       })
   })
+
+  /*   it.skip('Manually parse id_token and set on local storage to login', () => {
+    cy.request({
+      method: 'POST',
+      url: `https://getpocket.com/v3/oauth/request`,
+      followRedirect: false,
+      body: {
+        redirect_uri: 'http://localhost:8888?mode=auth',
+        consumer_key: '89737-f011af573a45996d1901b7d4',
+      },
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'X-Accept': 'application/json',
+      },
+    }).then(res => {
+      const request_token = res.body.code
+    })
+  }) */
 })

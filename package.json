@@ -7,7 +7,7 @@
     "lint": "vue-cli-service lint",
     "dev": "ntl dev",
     "test": "cypress open",
-    "test:ci": "cypress run"
+    "test:ci": "cypress run --browser chrome --headless"
   },
   "dependencies": {
     "axios": "^0.19.2",
