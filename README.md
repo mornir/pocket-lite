@@ -1,4 +1,4 @@
-# pocket-lite
+# Pocket lite
 
 ## Project setup
 ```
