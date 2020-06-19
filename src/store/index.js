@@ -3,8 +3,6 @@ import Vuex from 'vuex'
 import axios from 'axios'
 
 Vue.use(Vuex)
-
-const redirect_uri = process.env.VUE_APP_REDIRECT_URI
 const consumer_key = process.env.VUE_APP_CONSUMER_KEY
 
 const pocket = axios.create({
@@ -73,6 +71,7 @@ export default new Vuex.Store({
       commit('login')
     },
     async login() {
+      const redirect_uri = window.location.origin + '?mode=auth'
       const { code } = await pocket({
         url: '/pocket/oauth/request',
         data: {
