@@ -1,4 +1,5 @@
 {
   "baseUrl": "http://localhost:8888",
-  "pluginsFile": "tests/e2e/plugins/index.js"
+  "pluginsFile": "tests/e2e/plugins/index.js",
+  "projectId": "rkg74b"
 }
