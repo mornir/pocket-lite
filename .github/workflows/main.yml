@@ -25,3 +25,6 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CYPRESS_baseUrl: 'https://deploy-preview-${{ github.event.number }}--pocket-lite.netlify.app'
+          username: ${{ secrets.CYPRESS_USERNAME }}
+          password: ${{ secrets.CYPRESS_PASSWORD }}
+          accessToken: ${{ secrets.CYPRESS_ACCESS_TOKEN }}
