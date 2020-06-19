@@ -76,22 +76,4 @@ describe('Authentication Workflow - Happy Path', () => {
         expect(localStorage.getItem('username')).to.be.null
       })
   })
-
-  /*   it.skip('Manually parse id_token and set on local storage to login', () => {
-    cy.request({
-      method: 'POST',
-      url: `https://getpocket.com/v3/oauth/request`,
-      followRedirect: false,
-      body: {
-        redirect_uri: 'http://localhost:8888?mode=auth',
-        consumer_key: '89737-f011af573a45996d1901b7d4',
-      },
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-        'X-Accept': 'application/json',
-      },
-    }).then(res => {
-      const request_token = res.body.code
-    })
-  }) */
 })
