@@ -27,7 +27,11 @@ describe('Authentication Workflow - Happy Path', () => {
         }?mode=auth`
       )
     })
-    cy.visit('/?mode=auth')
+    cy.visit('/', {
+      qs: {
+        mode: 'auth',
+      },
+    })
 
     cy.fixture('defaultArticle').then(article => {
       cy.contains(article.title)
