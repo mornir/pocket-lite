@@ -1,7 +1,7 @@
 <template>
   <article class="flex border-2 border-red-200 rounded-md">
     <a
-      class="flex-1 p-4 pr-0"
+      class="flex-1 p-4 pr-0 bg-white"
       target="_blank"
       :href="url"
       rel="noopener nofollow"
@@ -12,7 +12,7 @@
     <button
       class="flex items-center p-4 bg-red-200"
       data-cy="archive-btn"
-      @click="archive"
+      @click.once="archive"
       aria-label="Archive article"
     >
       <svg
@@ -47,16 +47,30 @@ export default {
   },
   computed: {
     domain() {
-      const url = new URL(this.url)
-      return url.hostname.replace('www.', '')
+      try {
+        const url = new URL(this.url)
+        return url.hostname.replace('www.', '')
+      } catch {
+        return this.url
+      }
     },
   },
   methods: {
     archive() {
       try {
         this.$store.dispatch('archive', this.id)
+        this.$notify({
+          title: 'Article archived!',
+          type: 'success',
+          duration: -1,
+        })
       } catch (e) {
         console.error(e)
+        this.$notify({
+          title: 'Error when archiving',
+          text: e.message,
+          type: 'error',
+        })
       }
     },
   },

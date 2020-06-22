@@ -66,13 +66,24 @@ export default {
     async login() {
       try {
         await this.$store.dispatch('login')
-        console.log('success!')
+        this.$notify({
+          title: 'Login successful!',
+          type: 'success',
+        })
       } catch (e) {
+        this.$notify({
+          title: 'There was a problem logging you out',
+          type: 'error',
+        })
         console.error(e)
       }
     },
     logout() {
       this.$store.commit('logout')
+      this.$notify({
+        title: 'Logout successful!',
+        type: 'success',
+      })
     },
   },
 }

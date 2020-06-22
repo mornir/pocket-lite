@@ -5,18 +5,28 @@
       You have <span class="font-semibold">{{ count }}</span> in your reading
       list
     </p>
-    <ul class="c-grid">
+
+    <transition-group
+      name="article-list"
+      tag="ul"
+      class="c-grid"
+      enter-active-class="transition-opacity duration-300"
+      leave-active-class="absolute transition-opacity duration-300"
+      leave-to-class="opacity-0"
+      move-class="transition-transform duration-200"
+    >
       <li
-        v-for="{ item_id, resolved_title, resolved_url } in $store.state.list"
+        v-for="{ item_id, resolved_title, resolved_url, given_url } in $store
+          .state.list"
         :key="item_id"
       >
         <PocketArticle
           :id="item_id"
           :title="resolved_title"
-          :url="resolved_url"
+          :url="resolved_url || given_url"
         />
       </li>
-    </ul>
+    </transition-group>
   </div>
 </template>
 
@@ -56,4 +66,8 @@ export default {
     grid-gap: 1rem;
   }
 }
+/*
+.article-list-move {
+  @apply transition-transform duration-500;
+} */
 </style>

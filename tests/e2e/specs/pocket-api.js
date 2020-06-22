@@ -17,6 +17,8 @@ describe('Authentication Workflow - Happy Path', () => {
 
     cy.get('[data-cy=login]').as('button').click()
 
+    cy.contains('Login successful!')
+
     cy.wait('@getToken').should(xhr => {
       const requestToken = xhr.response.body.code
       expect(localStorage.getItem('requestToken')).to.eq(requestToken)
@@ -38,36 +40,6 @@ describe('Authentication Workflow - Happy Path', () => {
     })
   })
 
-  it('Retrieves, adds and archives', () => {
-    localStorage.setItem('accessToken', Cypress.env().accessToken)
-    cy.visit('/')
-
-    cy.log('👉 Retrieves default article')
-    cy.fixture('defaultArticle').as('defaultArticle')
-    cy.get('@defaultArticle').then(article => {
-      cy.contains(article.title)
-    })
-
-    cy.log('👉 Adds new article')
-    cy.fixture('newArticle').then(article => {
-      cy.get('[data-cy=add-url]').type(`${article.url}{enter}`)
-      cy.contains(article.url)
-      cy.reload()
-      cy.get('article').first().contains(article.title)
-    })
-
-    cy.log('👉 Archives recently added article')
-    cy.get('button[data-cy=archive-btn]').first().click()
-
-    cy.get('@defaultArticle').then(article => {
-      // Use Should callback to have Cypress automatically retry the assertions
-      cy.get('ul li').should($list => {
-        expect($list).to.have.length(1)
-        expect($list.get(0).textContent, 'first item').to.contain(article.title)
-      })
-    })
-  })
-
   it('Clears localstorage', () => {
     const { username, accessToken } = Cypress.env()
     localStorage.setItem('username', username)
@@ -79,5 +51,7 @@ describe('Authentication Workflow - Happy Path', () => {
         expect(localStorage.getItem('accessToken')).to.be.null
         expect(localStorage.getItem('username')).to.be.null
       })
+
+    cy.contains('Logout successful!')
   })
 })
