@@ -42,7 +42,13 @@ export default {
       try {
         this.$store.dispatch('addURL', this.url)
       } catch (e) {
+        this.$notify({
+          title: e.message,
+          type: 'error',
+        })
         console.error(e)
+      } finally {
+        this.url = ''
       }
     },
   },

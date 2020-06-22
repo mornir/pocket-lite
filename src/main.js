@@ -1,9 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import Notifications from 'vue-notification'
 
 import '@/assets/css/tailwind.css'
 import store from './store'
+
+Vue.use(Notifications)
 
 // Wrap window.location in a function for stubbing needs because window.location is read-only
 window.locationAssign = url => window.location.assign(url)

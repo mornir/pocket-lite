@@ -6,6 +6,7 @@
     <main class="px-8">
       <router-view />
     </main>
+    <notifications />
   </div>
 </template>
 
