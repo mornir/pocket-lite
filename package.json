@@ -2,6 +2,8 @@
   "name": "pocket-lite",
   "version": "0.1.0",
   "private": true,
+  "description": "A lighter version of the Pocket web application, built with Vue.",
+  "license": "MIT",
   "scripts": {
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
