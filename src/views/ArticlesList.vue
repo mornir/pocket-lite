@@ -9,7 +9,7 @@
     <transition-group
       name="article-list"
       tag="ul"
-      class="c-grid"
+      class="grid grid-flow-row-dense grid-cols-2 row-gap-2 col-gap-3 mb-4"
       enter-active-class="transition-opacity duration-300"
       leave-active-class="absolute transition-opacity duration-300"
       leave-to-class="opacity-0"
@@ -34,8 +34,6 @@
 import PocketArticle from '@/components/PocketArticle'
 import PocketAdd from '@/components/PocketAdd'
 
-/* import { mapState } from 'vuex' */
-
 export default {
   name: 'ArticlesList',
   components: {
@@ -58,16 +56,12 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-@sreen md {
+/* @sreen md {
   .c-grid {
     display: grid;
     grid-auto-rows: 1fr;
     grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
     grid-gap: 1rem;
   }
-}
-/*
-.article-list-move {
-  @apply transition-transform duration-500;
 } */
 </style>

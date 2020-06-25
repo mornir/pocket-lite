@@ -1,12 +1,13 @@
 <template>
-  <article class="flex border-2 border-red-200 rounded-md">
+  <article class="flex h-full border-2 border-red-200 rounded-md">
     <a
       class="flex-1 p-4 pr-0 bg-white"
       target="_blank"
       :href="url"
       rel="noopener nofollow"
     >
-      <h1 class="text-sm font-semibold">{{ title || url }}</h1>
+      <h1 class="text-sm font-semibold" v-if="title">{{ title }}</h1>
+      <h1 class="text-sm font-semibold break-all" v-else>{{ url }}</h1>
       <h2 class="text-xs">{{ domain }}</h2>
     </a>
     <button
@@ -62,7 +63,6 @@ export default {
         this.$notify({
           title: 'Article archived!',
           type: 'success',
-          duration: -1,
         })
       } catch (e) {
         console.error(e)
