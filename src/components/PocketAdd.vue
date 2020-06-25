@@ -8,10 +8,10 @@
         name="url"
         type="url"
         data-cy="add-url"
-        class="flex-1 p-2 border-2 border-red-200 rounded-md"
+        class="flex-1 p-2 border-2 border-red-200 rounded-l-md"
       />
 
-      <button class="p-2 bg-secondary">
+      <button class="p-2 bg-secondary rounded-r-md">
         <svg
           fill="none"
           stroke="currentColor"
