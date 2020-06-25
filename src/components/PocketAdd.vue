@@ -41,6 +41,10 @@ export default {
     addURL() {
       try {
         this.$store.dispatch('addURL', this.url)
+        this.$notify({
+          title: 'Article added!',
+          type: 'success',
+        })
       } catch (e) {
         this.$notify({
           title: e.message,
