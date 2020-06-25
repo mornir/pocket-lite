@@ -54,14 +54,3 @@ export default {
   },
 }
 </script>
-
-<style lang="postcss" scoped>
-/* @sreen md {
-  .c-grid {
-    display: grid;
-    grid-auto-rows: 1fr;
-    grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
-    grid-gap: 1rem;
-  }
-} */
-</style>
