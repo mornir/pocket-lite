@@ -6,7 +6,7 @@
     <main class="px-8">
       <router-view />
     </main>
-    <notifications />
+    <notifications class="mt-8" />
   </div>
 </template>
 
@@ -43,8 +43,15 @@ export default {
       try {
         await this.$store.dispatch('getList', ACCESS_TOKEN)
         this.$store.commit('login')
+        this.$notify({
+          title: 'Welcome back!',
+        })
       } catch (e) {
-        console.log(e)
+        this.$notify({
+          title: e.message,
+          type: 'error',
+        })
+        console.error(e)
       } finally {
         this.isListLoading = false
       }
