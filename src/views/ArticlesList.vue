@@ -9,7 +9,7 @@
     <transition-group
       name="article-list"
       tag="ul"
-      class="grid grid-flow-row-dense grid-cols-2 row-gap-2 col-gap-3 mb-4"
+      class="grid grid-flow-row-dense grid-cols-1 row-gap-2 col-gap-3 mb-4 lg:grid-cols-2"
       enter-active-class="transition-opacity duration-300"
       leave-active-class="absolute transition-opacity duration-300"
       leave-to-class="opacity-0"
