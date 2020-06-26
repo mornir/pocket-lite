@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="font-sans c-grid">
-    <header class="relative border-r-2">
+    <header class="relative min-h-screen border-r-2">
       <LeftPane />
     </header>
     <main class="px-8">
@@ -25,7 +25,7 @@ export default {
 
         try {
           await this.$store.dispatch('auth', REQUEST_TOKEN)
-          this.$router.replace({ name: 'article-list' })
+          this.$router.replace({ name: 'my-list' })
         } catch (e) {
           console.error(e)
         } finally {
@@ -43,6 +43,7 @@ export default {
       try {
         await this.$store.dispatch('getList', ACCESS_TOKEN)
         this.$store.commit('login')
+        this.$router.replace({ name: 'my-list' })
         this.$notify({
           title: 'Welcome back!',
         })
@@ -55,6 +56,8 @@ export default {
       } finally {
         this.isListLoading = false
       }
+    } else {
+      this.$router.replace({ name: 'about' })
     }
   },
 }
