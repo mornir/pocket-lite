@@ -79,6 +79,7 @@ export default {
     },
     logout() {
       this.$store.commit('logout')
+      this.$router.replace({ name: 'about' })
       this.$notify({
         title: 'Logout successful!',
         type: 'success',
