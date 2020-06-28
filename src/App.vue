@@ -43,7 +43,11 @@ export default {
       try {
         await this.$store.dispatch('getList', ACCESS_TOKEN)
         this.$store.commit('login')
-        this.$router.replace({ name: 'my-list' })
+        console.log('called twice')
+        if (this.$route.path !== '/my-list') {
+          this.$router.replace({ name: 'my-list' })
+        }
+
         this.$notify({
           title: 'Welcome back!',
         })
@@ -56,8 +60,6 @@ export default {
       } finally {
         this.isListLoading = false
       }
-    } else {
-      this.$router.replace({ name: 'about' })
     }
   },
 }
@@ -66,6 +68,6 @@ export default {
 <style scoped>
 .c-grid {
   display: grid;
-  grid-template-columns: 20rem 1fr;
+  grid-template-columns: 17rem 1fr;
 }
 </style>
