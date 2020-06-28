@@ -1,22 +1,23 @@
 <template>
-  <article class="flex border-2 border-red-200 rounded-md">
+  <article class="flex h-full border-2 rounded-md border-primary">
     <a
       class="flex-1 p-4 pr-0 bg-white"
       target="_blank"
       :href="url"
       rel="noopener nofollow"
     >
-      <h1 class="text-sm font-semibold">{{ title || url }}</h1>
+      <h1 class="text-sm font-semibold" v-if="title">{{ title }}</h1>
+      <h1 class="text-sm font-semibold break-all" v-else>{{ url }}</h1>
       <h2 class="text-xs">{{ domain }}</h2>
     </a>
     <button
-      class="flex items-center p-4 bg-red-200"
+      class="flex items-center px-2 py-4 bg-primary"
       data-cy="archive-btn"
       @click.once="archive"
       aria-label="Archive article"
     >
       <svg
-        class="inline-block w-8 h-8 fill-current text-primary"
+        class="inline-block w-8 h-8 text-white fill-current"
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -62,7 +63,6 @@ export default {
         this.$notify({
           title: 'Article archived!',
           type: 'success',
-          duration: -1,
         })
       } catch (e) {
         console.error(e)
