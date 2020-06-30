@@ -36,7 +36,7 @@
       <li>
         Open the <code>resolved_url</code> instead of the <code>given_url</code>
       </li>
-      <li>Show the total of saved articles counts</li>
+      <li>Show the total number of saved articles</li>
       <li>
         Easy to add URLs (for users who can't use the web extension)
       </li>

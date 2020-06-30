@@ -12,6 +12,7 @@ I rebuilt the popular [Pocket web application](https://getpocket.com/) with Vue!
 
 Building this single page application with Vue was a great opportunity to learn and consolidate some knowledge, such as:
 
+- [Design web app in Figma](https://www.figma.com/file/z6aCgv7lVlbnhGbighJRm7/Pocket-Lite) before starting coding
 - [TDD development with Cypress](https://www.cypress.io/blog/2019/02/05/modern-frontend-testing-with-cypress/): In the early phases of development I had Cypress opened the whole time to directly test the code every time I saved. It was a great to have tests in place from the beginning. For example, I decided to do a big refactor to Vuex and it was good to have the tests.
 - [OAuth authentication with Pocket](https://getpocket.com/developer/docs/authentication): I used Netlify redirects as a proxy server to communicate with the Pocket API. Thankfully, with [Netlify Dev](https://www.netlify.com/products/dev/) I was able to run the "proxy server" locally.
 - [Using GitHub Actions for CI](https://dev.to/mornir/adding-ci-to-your-jamstack-with-cypress-github-actions-and-netlify-deploy-preview-579k)
@@ -23,7 +24,7 @@ At my workplace, we have corporate policies in place that restrict the installat
 - Keeping only the functionalities I use on a daily basis: adding articles, reading added articles (open a new tab) marking articles as read,
 - Open the `resolved_url` instead of `given_url`
 - Minimalistic (no in-app reader, tags, etc.)
-- Show the total of saved articles counts
+- Show the total number of saved articles
 - Easy to add URLs (at work I can't use the web extension to quickly add new articles)
 - Easy to reach "Mark as read"
 
